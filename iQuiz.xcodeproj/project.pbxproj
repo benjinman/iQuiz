@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9D011E351DCB02220029F837 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D011E341DCB02220029F837 /* AppDelegate.swift */; };
-		9D011E371DCB02220029F837 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D011E361DCB02220029F837 /* ViewController.swift */; };
 		9D011E3A1DCB02220029F837 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D011E381DCB02220029F837 /* Main.storyboard */; };
 		9D011E3C1DCB02220029F837 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D011E3B1DCB02220029F837 /* Assets.xcassets */; };
 		9D011E3F1DCB02220029F837 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D011E3D1DCB02220029F837 /* LaunchScreen.storyboard */; };
@@ -38,7 +37,6 @@
 /* Begin PBXFileReference section */
 		9D011E311DCB02220029F837 /* iQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D011E341DCB02220029F837 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9D011E361DCB02220029F837 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9D011E391DCB02220029F837 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9D011E3B1DCB02220029F837 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D011E3E1DCB02220029F837 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -102,7 +100,6 @@
 			isa = PBXGroup;
 			children = (
 				9D011E341DCB02220029F837 /* AppDelegate.swift */,
-				9D011E361DCB02220029F837 /* ViewController.swift */,
 				9D6788F11DCC2A9700052C9C /* QuizTableViewController.swift */,
 				9D6788F31DCC2AB000052C9C /* QuizTableViewCell.swift */,
 				9D011E381DCB02220029F837 /* Main.storyboard */,
@@ -267,7 +264,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D6788F21DCC2A9700052C9C /* QuizTableViewController.swift in Sources */,
-				9D011E371DCB02220029F837 /* ViewController.swift in Sources */,
 				9D6788F41DCC2AB000052C9C /* QuizTableViewCell.swift in Sources */,
 				9D011E351DCB02220029F837 /* AppDelegate.swift in Sources */,
 			);
