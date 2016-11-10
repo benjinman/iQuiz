@@ -16,6 +16,28 @@ class QuizTableViewController: UITableViewController {
                             "Evil, evil science problems"
     ]
     
+    // let questions = [[String:String]]()
+    let marvelQuestions = ["Who is Iron Man?",
+                           "Who founded the X-Men",
+                           "How did Spider-Man get his powers?"
+    ]
+    
+    let marvelAnswers = [1, 2, 1]
+    
+    let marvelPossibleAnswers = [["Tony Stark",
+                                  "Obadiah Stane",
+                                  "A rock hit by Megadeth",
+                                  "Nobody knows"],
+                                 ["Tony Stark",
+                                  "Professor X",
+                                  "The X-Institute",
+                                  "Erik Lensherr"],
+                                 ["He was bitten by a radioactive spider",
+                                  "He ate a radioactive spider",
+                                  "He is a radioactive spider",
+                                  "He looked at a radioactive spider"]
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,7 +51,19 @@ class QuizTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // get a reference to the second view controller
+        let questionScene = segue.destination as! QuestionsViewController
+        
+        // let quiz = sender as! QuizTableViewCell
+        
+        // set a variable in the second view controller with the String to pass
+        questionScene.questions = self.marvelQuestions
+        questionScene.answers = self.marvelAnswers
+        questionScene.answerChoices = self.marvelPossibleAnswers
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

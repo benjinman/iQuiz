@@ -3,13 +3,13 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--iQuiz-->
         <scene sceneID="vuu-0a-r5R">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ga0-MY-qob" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="Xd6-ho-7ij" customClass="QuizTableViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Zsy-nj-2wT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -48,6 +48,7 @@
                                     <outlet property="quizDescription" destination="nTl-zX-tEo" id="rTK-CE-F8j"/>
                                     <outlet property="quizIcon" destination="a1Y-dC-1P3" id="Epa-Mv-9wV"/>
                                     <outlet property="quizTitle" destination="NxX-h9-rF1" id="VSe-g6-ZEN"/>
+                                    <segue destination="g8F-CE-6jK" kind="presentation" id="ICf-CU-2Y7"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -64,8 +65,147 @@
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ga0-MY-qob" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="581.60000000000002" y="99.400299850074973"/>
+        </scene>
+        <!--Questions View Controller-->
+        <scene sceneID="TFF-Is-a7e">
+            <objects>
+                <viewController storyboardIdentifier="questionScene" id="g8F-CE-6jK" customClass="QuestionsViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="AcB-f1-Ar4"/>
+                        <viewControllerLayoutGuide type="bottom" id="sdI-Zg-8yQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Kwu-0c-Mxt">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hhp-6R-Riq">
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="HkB-tI-m2v">
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="52K-T1-lfn">
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="selectFirstButton:" destination="g8F-CE-6jK" eventType="touchUpInside" id="cuh-pS-pCg"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mwF-ml-YjF">
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="selectSecondButton:" destination="g8F-CE-6jK" eventType="touchUpInside" id="wxu-Uy-BAX"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hOY-ad-dOc">
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="selectThirdButton:" destination="g8F-CE-6jK" eventType="touchUpInside" id="GUm-8I-lfk"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6pf-4A-Aiz">
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="selectFourthButton:" destination="g8F-CE-6jK" eventType="touchUpInside" id="Xeq-3A-687"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="mwF-ml-YjF" firstAttribute="height" secondItem="52K-T1-lfn" secondAttribute="height" id="QA1-bX-ftz"/>
+                                    <constraint firstItem="6pf-4A-Aiz" firstAttribute="height" secondItem="52K-T1-lfn" secondAttribute="height" id="ZgE-Rk-uGS"/>
+                                    <constraint firstItem="hOY-ad-dOc" firstAttribute="height" secondItem="52K-T1-lfn" secondAttribute="height" id="cqa-qK-84h"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G01-xS-7hx">
+                                <state key="normal" title="submit"/>
+                                <connections>
+                                    <segue destination="2OO-ia-LN4" kind="presentation" id="gB6-F4-6Qp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQp-mg-oo4">
+                                <frame key="frameInset" minX="16" minY="20" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="back"/>
+                                <connections>
+                                    <segue destination="ffG-TK-5OZ" kind="presentation" id="ePX-8N-szZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="HkB-tI-m2v" firstAttribute="top" relation="lessThanOrEqual" secondItem="Hhp-6R-Riq" secondAttribute="bottom" constant="40" id="3U8-lS-Xum"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="G01-xS-7hx" secondAttribute="trailing" id="BVh-LH-fBw"/>
+                            <constraint firstItem="sdI-Zg-8yQ" firstAttribute="top" relation="lessThanOrEqual" secondItem="HkB-tI-m2v" secondAttribute="bottom" constant="80" id="DuJ-oF-TEy"/>
+                            <constraint firstItem="Hhp-6R-Riq" firstAttribute="leading" secondItem="Kwu-0c-Mxt" secondAttribute="leadingMargin" id="FPL-z6-eiQ"/>
+                            <constraint firstItem="Hhp-6R-Riq" firstAttribute="centerX" secondItem="Kwu-0c-Mxt" secondAttribute="centerX" id="GS3-an-LOJ"/>
+                            <constraint firstItem="Hhp-6R-Riq" firstAttribute="trailing" secondItem="Kwu-0c-Mxt" secondAttribute="trailingMargin" id="Wn3-tn-BSk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HkB-tI-m2v" secondAttribute="trailing" constant="30" id="gBx-qP-ns6"/>
+                            <constraint firstItem="HkB-tI-m2v" firstAttribute="leading" secondItem="Kwu-0c-Mxt" secondAttribute="leadingMargin" constant="30" id="iMO-1L-LZt"/>
+                            <constraint firstItem="sdI-Zg-8yQ" firstAttribute="top" secondItem="G01-xS-7hx" secondAttribute="bottom" constant="8" id="n3P-7n-CmS"/>
+                            <constraint firstItem="G01-xS-7hx" firstAttribute="top" secondItem="HkB-tI-m2v" secondAttribute="bottom" constant="19" id="nfz-ro-FpL"/>
+                            <constraint firstItem="Hhp-6R-Riq" firstAttribute="top" secondItem="AcB-f1-Ar4" secondAttribute="bottom" constant="62" id="rhY-m1-2gh"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="firstChoice" destination="52K-T1-lfn" id="kMd-q8-YK0"/>
+                        <outlet property="fourthChoice" destination="6pf-4A-Aiz" id="uTu-gs-VJh"/>
+                        <outlet property="questionLabel" destination="Hhp-6R-Riq" id="MKY-4Q-OQs"/>
+                        <outlet property="secondChoice" destination="mwF-ml-YjF" id="bWD-b4-EdB"/>
+                        <outlet property="thirdChoice" destination="hOY-ad-dOc" id="93Y-b6-D4Q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aH9-N7-Nsy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1397.5999999999999" y="98.50074962518741"/>
+        </scene>
+        <!--Answer View Controller-->
+        <scene sceneID="Vc1-Mr-Go9">
+            <objects>
+                <viewController id="2OO-ia-LN4" customClass="AnswerViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YBf-SS-nqI"/>
+                        <viewControllerLayoutGuide type="bottom" id="ICx-G6-zIu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dwC-6v-F8B">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yaj-MU-QbW">
+                                <frame key="frameInset" minX="312" minY="629" width="47" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="next"/>
+                                <connections>
+                                    <action selector="showNextScene:" destination="2OO-ia-LN4" eventType="touchUpInside" id="t0O-HK-OCv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bci-da-Z6h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2174" y="99"/>
+        </scene>
+        <!--Finished View Controller-->
+        <scene sceneID="pfU-Fe-LpH">
+            <objects>
+                <viewController id="G97-kl-0St" customClass="FinishedViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ffu-6O-FCD"/>
+                        <viewControllerLayoutGuide type="bottom" id="y9J-ip-0cw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Uag-3y-gG7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RrZ-S9-mS3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3014" y="99"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="M8Z-8y-NTI">
