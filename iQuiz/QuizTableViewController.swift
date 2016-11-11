@@ -11,31 +11,22 @@ import UIKit
 class QuizTableViewController: UITableViewController {
     
     let quizTitles = ["Mathematics", "Marvel Super Heroes", "Science"]
-    let quizDescriptions = ["Some math problems to give you a headache",
-                            "A fun Marvel Super Hero quiz",
-                            "Evil, evil science problems"
+    
+    let quizDescriptions = ["Did you pass the third grade?",
+                            "Avengers, Assemble!",
+                            "Because SCIENCE!"
+    ]
+
+    let questions = ["Mathematics":["What is 2 + 2?"],
+                     "Marvel Super Heroes":["Who is Iron Man?", "Who founded the X-Men", "How did Spider-Man get his powers?"],
+                     "Science":["What is fire?"]
     ]
     
-    // let questions = [[String:String]]()
-    let marvelQuestions = ["Who is Iron Man?",
-                           "Who founded the X-Men",
-                           "How did Spider-Man get his powers?"
-    ]
+    let quizAnswers = ["Mathematics":[1], "Marvel Super Heroes":[1, 2, 1], "Science":[1]]
     
-    let marvelAnswers = [1, 2, 1]
-    
-    let marvelPossibleAnswers = [["Tony Stark",
-                                  "Obadiah Stane",
-                                  "A rock hit by Megadeth",
-                                  "Nobody knows"],
-                                 ["Tony Stark",
-                                  "Professor X",
-                                  "The X-Institute",
-                                  "Erik Lensherr"],
-                                 ["He was bitten by a radioactive spider",
-                                  "He ate a radioactive spider",
-                                  "He is a radioactive spider",
-                                  "He looked at a radioactive spider"]
+    let possibleAnswers = ["Mathematics":[["4", "22", "An irrational number", "Nobody knows"]],
+                           "Marvel Super Heroes":[["Tony Stark", "Obadiah Stane", "A rock hit by Megadeth", "Nobody knows"], ["Tony Stark", "Professor X", "The X-Institute", "Erik Lensherr"], ["He was bitten by a radioactive spider", "He ate a radioactive spider", "He is a radioactive spider", "He looked at a radioactive spider"]],
+                           "Science":[["One of the four classical elements", "A magical reaction given to us by God", "A band that hasn't yet been discovered", "Fire! Fire! Fire! heh-heh"]]
     ]
     
     override func viewDidLoad() {
@@ -56,12 +47,12 @@ class QuizTableViewController: UITableViewController {
         // get a reference to the second view controller
         let questionScene = segue.destination as! QuestionsViewController
         
-        // let quiz = sender as! QuizTableViewCell
+        let quiz = sender as! QuizTableViewCell
         
         // set a variable in the second view controller with the String to pass
-        questionScene.questions = self.marvelQuestions
-        questionScene.answers = self.marvelAnswers
-        questionScene.answerChoices = self.marvelPossibleAnswers
+        questionScene.questions = self.questions[quiz.quizTitle.text!]!
+        questionScene.answers = self.quizAnswers[quiz.quizTitle.text!]!
+        questionScene.answerChoices = self.possibleAnswers[quiz.quizTitle.text!]!
     }
     
     override func didReceiveMemoryWarning() {

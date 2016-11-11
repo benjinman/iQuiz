@@ -130,7 +130,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="back"/>
                                 <connections>
-                                    <segue destination="ffG-TK-5OZ" kind="presentation" id="ePX-8N-szZ"/>
+                                    <segue destination="ffG-TK-5OZ" kind="presentation" identifier="returnHome" id="ePX-8N-szZ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -154,6 +154,7 @@
                         <outlet property="fourthChoice" destination="6pf-4A-Aiz" id="uTu-gs-VJh"/>
                         <outlet property="questionLabel" destination="Hhp-6R-Riq" id="MKY-4Q-OQs"/>
                         <outlet property="secondChoice" destination="mwF-ml-YjF" id="bWD-b4-EdB"/>
+                        <outlet property="submitButton" destination="G01-xS-7hx" id="1ku-hl-D63"/>
                         <outlet property="thirdChoice" destination="hOY-ad-dOc" id="93Y-b6-D4Q"/>
                     </connections>
                 </viewController>
@@ -164,7 +165,7 @@
         <!--Answer View Controller-->
         <scene sceneID="Vc1-Mr-Go9">
             <objects>
-                <viewController id="2OO-ia-LN4" customClass="AnswerViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="answerScene" id="2OO-ia-LN4" customClass="AnswerViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YBf-SS-nqI"/>
                         <viewControllerLayoutGuide type="bottom" id="ICx-G6-zIu"/>
@@ -175,11 +176,13 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yaj-MU-QbW">
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="QoA-c4-a6b"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="47" id="gmB-cg-vy9"/>
                                     <constraint firstAttribute="width" constant="47" id="zfD-4E-bPJ"/>
                                 </constraints>
                                 <state key="normal" title="next"/>
                                 <connections>
-                                    <action selector="showNextScene:" destination="2OO-ia-LN4" eventType="touchUpInside" id="t0O-HK-OCv"/>
+                                    <action selector="showNextScene:" destination="2OO-ia-LN4" eventType="touchUpInside" id="bDl-9x-6gk"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r5a-6R-gyL">
@@ -197,19 +200,37 @@
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ptr-Aj-4ni">
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Correct Answer" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOR-ge-V7Q">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Correct Answer" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOR-ge-V7Q">
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Answer" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Kk-fl-Lly">
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9gB-A9-V6m">
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You chose:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qqu-cV-yij">
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Answer" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Kk-fl-Lly">
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right or Wrong" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="thP-lU-3Ty">
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="thP-lU-3Ty" firstAttribute="height" secondItem="qqu-cV-yij" secondAttribute="height" id="XYU-UU-FOJ"/>
+                                            <constraint firstItem="1Kk-fl-Lly" firstAttribute="height" secondItem="qqu-cV-yij" secondAttribute="height" id="jfU-jV-UFZ"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="1Kk-fl-Lly" firstAttribute="height" secondItem="jOR-ge-V7Q" secondAttribute="height" id="BlE-uc-29j"/>
+                                    <constraint firstItem="9gB-A9-V6m" firstAttribute="height" secondItem="jOR-ge-V7Q" secondAttribute="height" id="3ex-bZ-IBe"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -224,6 +245,7 @@
                             <constraint firstItem="ICx-G6-zIu" firstAttribute="top" secondItem="Yaj-MU-QbW" secondAttribute="bottom" constant="8" id="ekS-jR-Rfo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ptr-Aj-4ni" secondAttribute="trailing" constant="20" id="erx-I8-izU"/>
                             <constraint firstItem="r5a-6R-gyL" firstAttribute="centerX" secondItem="dwC-6v-F8B" secondAttribute="centerX" id="kj2-ZX-0vW"/>
+                            <constraint firstItem="Yaj-MU-QbW" firstAttribute="top" secondItem="ptr-Aj-4ni" secondAttribute="bottom" constant="78" id="owP-Yp-lsr"/>
                             <constraint firstItem="r5a-6R-gyL" firstAttribute="trailing" secondItem="dwC-6v-F8B" secondAttribute="trailingMargin" id="rWa-uv-3k0"/>
                             <constraint firstItem="ptr-Aj-4ni" firstAttribute="top" relation="lessThanOrEqual" secondItem="r5a-6R-gyL" secondAttribute="bottom" constant="100" id="vAJ-mG-3zd"/>
                         </constraints>
@@ -231,7 +253,10 @@
                     <connections>
                         <outlet property="correctAnswer" destination="jOR-ge-V7Q" id="xfT-23-oTo"/>
                         <outlet property="questionLabel" destination="r5a-6R-gyL" id="7oz-Wd-nzU"/>
+                        <outlet property="rightOrWrong" destination="thP-lU-3Ty" id="ehX-0Q-rwS"/>
                         <outlet property="userAnswer" destination="1Kk-fl-Lly" id="pAZ-B8-lrk"/>
+                        <segue destination="G97-kl-0St" kind="presentation" identifier="answerToFinished" id="oJh-NF-VR5"/>
+                        <segue destination="g8F-CE-6jK" kind="presentation" identifier="answerToQuestion" id="77Q-0e-4ix"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bci-da-Z6h" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -241,7 +266,7 @@
         <!--Finished View Controller-->
         <scene sceneID="pfU-Fe-LpH">
             <objects>
-                <viewController id="G97-kl-0St" customClass="FinishedViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="finishedScene" id="G97-kl-0St" customClass="FinishedViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ffu-6O-FCD"/>
                         <viewControllerLayoutGuide type="bottom" id="y9J-ip-0cw"/>
@@ -264,16 +289,36 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9i-Aa-oqZ">
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="score" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hjh-16-xls">
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="9Pc-np-xq3" firstAttribute="leading" relation="lessThanOrEqual" secondItem="Uag-3y-gG7" secondAttribute="leadingMargin" id="2JA-Og-B23"/>
                             <constraint firstItem="c2A-Ep-5KS" firstAttribute="trailing" secondItem="Uag-3y-gG7" secondAttribute="trailingMargin" id="2XH-Rk-sSZ"/>
+                            <constraint firstItem="i9i-Aa-oqZ" firstAttribute="top" secondItem="9Pc-np-xq3" secondAttribute="bottom" constant="91" id="7sm-PG-HHi"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9Pc-np-xq3" secondAttribute="trailing" id="GQk-lL-u2Q"/>
                             <constraint firstItem="9Pc-np-xq3" firstAttribute="top" secondItem="ffu-6O-FCD" secondAttribute="bottom" constant="62" id="H1a-UV-AvS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="i9i-Aa-oqZ" secondAttribute="trailing" id="TBa-yJ-cdf"/>
+                            <constraint firstItem="hjh-16-xls" firstAttribute="top" secondItem="i9i-Aa-oqZ" secondAttribute="bottom" constant="91" id="Uo8-R4-nv5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hjh-16-xls" secondAttribute="trailing" id="vHA-s3-KHx"/>
+                            <constraint firstItem="hjh-16-xls" firstAttribute="leading" secondItem="Uag-3y-gG7" secondAttribute="leadingMargin" id="vfp-Re-c9e"/>
+                            <constraint firstItem="i9i-Aa-oqZ" firstAttribute="leading" secondItem="Uag-3y-gG7" secondAttribute="leadingMargin" id="vvV-Da-XFk"/>
                             <constraint firstItem="y9J-ip-0cw" firstAttribute="top" secondItem="c2A-Ep-5KS" secondAttribute="bottom" constant="8" id="zhi-WL-MYP"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="i9i-Aa-oqZ" id="uxW-xY-DEK"/>
+                        <outlet property="quizResult" destination="hjh-16-xls" id="F9U-mT-81I"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RrZ-S9-mS3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -297,6 +342,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="M27-bN-XdW"/>
+        <segue reference="4ji-hB-snP"/>
+        <segue reference="77Q-0e-4ix"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -12,13 +12,15 @@ class QuestionsViewController: UIViewController {
     var questions = [String]()
     var answers = [Int]()
     var answerChoices = [[String]]()
-    var count:Int = 0 // keep track of which question the user is on
+    var count = 0 // keep track of which question the user is on
+    var score = 0
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var firstChoice: UIButton!
     @IBOutlet weak var secondChoice: UIButton!
     @IBOutlet weak var thirdChoice: UIButton!
     @IBOutlet weak var fourthChoice: UIButton!
+    @IBOutlet weak var submitButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +32,7 @@ class QuestionsViewController: UIViewController {
         secondChoice.setTitle(answerChoices[count][1], for: .normal)
         thirdChoice.setTitle(answerChoices[count][2], for: .normal)
         fourthChoice.setTitle(answerChoices[count][3], for: .normal)
+        submitButton.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,27 +42,31 @@ class QuestionsViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // get a reference to the second view controller
-        let answerScene = segue.destination as! AnswerViewController
-        
-        // let quiz = sender as! QuizTableViewCell
-        
-        // set a variable in the second view controller with the String to pass
-        answerScene.count = self.count
-        
-        var selected = 3
-        
-        if (firstChoice.isSelected) {
-            selected = 0
-        } else if (secondChoice.isSelected) {
-            selected = 1
-        } else if (thirdChoice.isSelected) {
-            selected = 2
+        if (segue.identifier != "returnHome") {
+            let answerScene = segue.destination as! AnswerViewController
+            
+            // let quiz = sender as! QuizTableViewCell
+            
+            // set a variable in the second view controller with the String to pass
+            answerScene.count = self.count
+            
+            var selected = 3
+            
+            if (firstChoice.isSelected) {
+                selected = 0
+            } else if (secondChoice.isSelected) {
+                selected = 1
+            } else if (thirdChoice.isSelected) {
+                selected = 2
+            }
+            
+            answerScene.count = self.count
+            answerScene.choice = selected
+            answerScene.questions = self.questions
+            answerScene.answers = self.answers
+            answerScene.choices = self.answerChoices
+            answerScene.score = self.score
         }
-        
-        answerScene.choice = selected
-        answerScene.questions = [self.questions[count]]
-        answerScene.answer = self.answers[count]
-        answerScene.choices = self.answerChoices[count]
     }
     
     @IBAction func selectFirstButton(_ sender: AnyObject) {
@@ -81,6 +88,7 @@ class QuestionsViewController: UIViewController {
     func selectButton(_ button: UIButton) {
         unselectAll()
         button.isSelected = true
+        submitButton.isHidden = false
     }
 
     func unselectAll() {
