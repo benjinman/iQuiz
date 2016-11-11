@@ -15,10 +15,24 @@ class AnswerViewController: UIViewController {
     var count = 0
     var choice = 0
     
+    @IBOutlet weak var questionLabel: UILabel!
+    @IBOutlet weak var correctAnswer: UILabel!
+    @IBOutlet weak var userAnswer: UILabel!
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        questionLabel.text = questions[count]
+        correctAnswer.text = choices[answer - 1]
+        userAnswer.text = choices[choice]
+        
+        if (choice == answer - 1) {
+            userAnswer.textColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        } else {
+            userAnswer.textColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,6 +40,12 @@ class AnswerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
         
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (count <= questions.count - 1) {
+            
+        }
     }
     
     @IBAction func showNextScene(_ sender: AnyObject) {

@@ -55,6 +55,7 @@ class QuestionsViewController: UIViewController {
         } else if (thirdChoice.isSelected) {
             selected = 2
         }
+        
         answerScene.choice = selected
         answerScene.questions = [self.questions[count]]
         answerScene.answer = self.answers[count]
