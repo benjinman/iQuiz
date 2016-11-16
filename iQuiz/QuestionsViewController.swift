@@ -10,7 +10,7 @@ import UIKit
 
 class QuestionsViewController: UIViewController {
     var questions = [String]()
-    var answers = [Int]()
+    var answers = [String]()
     var answerChoices = [[String]]()
     var count = 0 // keep track of which question the user is on
     var score = 0

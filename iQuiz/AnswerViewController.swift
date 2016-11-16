@@ -10,7 +10,7 @@ import UIKit
 
 class AnswerViewController: UIViewController {
     var questions = [String]()
-    var answers = [Int]()
+    var answers = [String]()
     var choices = [[String]]()
     var count = 0
     var choice = 0
@@ -28,11 +28,11 @@ class AnswerViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         questionLabel.text = questions[count]
-        correctAnswer.text = choices[count][answers[count] - 1]
+        correctAnswer.text = choices[count][Int(answers[count])! - 1]
         userAnswer.text = choices[count][choice]
         
         var correctnessColor = UIColor()
-        if (choice == answers[count] - 1) {
+        if (choice == Int(answers[count])! - 1) {
             correctnessColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
             rightOrWrong.text = "You got it right!"
             score += 1

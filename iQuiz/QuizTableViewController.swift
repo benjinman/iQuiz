@@ -8,26 +8,14 @@
 
 import UIKit
 
-class QuizTableViewController: UITableViewController {
+class QuizTableViewController: UITableViewController, NSURLConnectionDataDelegate {
     
-    let quizTitles = ["Mathematics", "Marvel Super Heroes", "Science"]
-    
-    let quizDescriptions = ["Did you pass the third grade?",
-                            "Avengers, Assemble!",
-                            "Because SCIENCE!"
-    ]
-
-    let questions = ["Mathematics":["What is 2 + 2?"],
-                     "Marvel Super Heroes":["Who is Iron Man?", "Who founded the X-Men", "How did Spider-Man get his powers?"],
-                     "Science":["What is fire?"]
-    ]
-    
-    let quizAnswers = ["Mathematics":[1], "Marvel Super Heroes":[1, 2, 1], "Science":[1]]
-    
-    let possibleAnswers = ["Mathematics":[["4", "22", "An irrational number", "Nobody knows"]],
-                           "Marvel Super Heroes":[["Tony Stark", "Obadiah Stane", "A rock hit by Megadeth", "Nobody knows"], ["Tony Stark", "Professor X", "The X-Institute", "Erik Lensherr"], ["He was bitten by a radioactive spider", "He ate a radioactive spider", "He is a radioactive spider", "He looked at a radioactive spider"]],
-                           "Science":[["One of the four classical elements", "A magical reaction given to us by God", "A band that hasn't yet been discovered", "Fire! Fire! Fire! heh-heh"]]
-    ]
+    var dataURL = "http://tednewardsandbox.site44.com/questions.json"
+    var quizTitles = [String]()
+    var quizDescriptions = [String]()
+    var questions = [String:[String]]()
+    var quizAnswers = [String:[String]]()
+    var possibleAnswers = [String:[[String]]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,11 +24,8 @@ class QuizTableViewController: UITableViewController {
         self.tableView.estimatedRowHeight = 80
         
         self.tableView.tableFooterView = UIView()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        requestData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -64,7 +49,7 @@ class QuizTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return quizTitles.count
+        return 3//quizTitles.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -77,13 +62,69 @@ class QuizTableViewController: UITableViewController {
         return cell
     }
     
+    func requestData() {
+        let urlPath = URL(string: dataURL)!
+        let urlRequest = URLRequest(url: urlPath)
+        let session = URLSession.shared
+        let task = session.dataTask(with: urlRequest) {
+            (data, response, error) -> Void in
+            
+            let httpResponse = response as! HTTPURLResponse
+            let statusCode = httpResponse.statusCode
+            
+            if (statusCode == 200) {
+                print("Everyone is fine, file downloaded successfully.")
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [[String:AnyObject]]
+                    for quiz in json {
+                        let title = quiz["title"] as! String
+                        self.quizTitles.append(title)
+                        self.quizDescriptions.append(quiz["desc"] as! String)
+                        
+                        for question in quiz["questions"] as! [[String: AnyObject]] {
+                            if !self.questions.keys.contains(title) {
+                                self.questions.updateValue([question["text"] as! String], forKey: title)
+                                self.quizAnswers.updateValue([question["answer"] as! String], forKey: title)
+                                self.possibleAnswers.updateValue([question["answers"] as! [String]], forKey: title)
+                            } else {
+                                self.questions[title]?.append(question["text"] as! String)
+                                self.quizAnswers[title]?.append(question["answer"] as! String)
+                                self.possibleAnswers[title]?.append(question["answers"] as! [String])
+                            }
+                        }
+                    }
+                } catch {
+                    print("error: \(error)")
+                }
+            }
+        }
+        
+        task.resume()
+        
+    }
+    
     @IBAction func presentSettings(_ sender: AnyObject) {
-        let alert = UIAlertController(title: "Settings go here", message: "", preferredStyle: .alert)
-        let alertOKAction = UIAlertAction(title:"OK", style: .default, handler: nil)
-        alert.addAction(alertOKAction)
+        let alert = UIAlertController(title: "Change Questions URL", message: "", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
+            (action : UIAlertAction!) -> Void in
+            
+        })
+        let changeURLAction = UIAlertAction(title: "Check Now", style: .default, handler: {
+            action -> Void in
+            let questionURL = alert.textFields![0] as UITextField
+            self.dataURL = questionURL.text!
+            self.view.setNeedsDisplay()
+        })
+        alert.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Enter new URL"
+        }
+        
+        alert.addAction(cancelAction)
+        alert.addAction(changeURLAction)
+        
         self.present(alert, animated: true, completion: nil)
     }
-
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -118,15 +159,4 @@ class QuizTableViewController: UITableViewController {
         return true
     }
     */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
