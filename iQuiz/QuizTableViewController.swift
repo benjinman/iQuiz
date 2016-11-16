@@ -8,9 +8,18 @@
 
 import UIKit
 
-class QuizTableViewController: UITableViewController, NSURLConnectionDataDelegate {
+class QuizTableViewController: UITableViewController {
     
     var dataURL = "http://tednewardsandbox.site44.com/questions.json"
+    
+    struct quizKeys {
+        static let quizTitles = "titles"
+        static let quizDescriptions = "descriptions"
+        static let questions = "questions"
+        static let quizAnswers = "answerIndex"
+        static let possibleAnswers = "answers"
+    }
+    
     var quizTitles = [String]()
     var quizDescriptions = [String]()
     var questions = [String:[String]]()
@@ -25,7 +34,24 @@ class QuizTableViewController: UITableViewController, NSURLConnectionDataDelegat
         
         self.tableView.tableFooterView = UIView()
         
-        requestData()
+//        let appDomain = Bundle.main.bundleIdentifier!
+//        
+//        UserDefaults.standard.removePersistentDomain(forName: appDomain)
+        
+        // attempt at storing data
+        if (requestData()) {
+            let saved = UserDefaults.standard
+            
+            quizTitles = saved.array(forKey: quizKeys.quizTitles) as! [String]
+            quizDescriptions = saved.array(forKey: quizKeys.quizDescriptions) as! [String]
+            questions = saved.dictionary(forKey: quizKeys.questions) as! [String : [String]]
+            quizAnswers = saved.dictionary(forKey: quizKeys.quizAnswers) as! [String : [String]]
+            possibleAnswers = saved.dictionary(forKey: quizKeys.possibleAnswers) as! [String : [[String]]]
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -56,13 +82,14 @@ class QuizTableViewController: UITableViewController, NSURLConnectionDataDelegat
         let cell = tableView.dequeueReusableCell(withIdentifier: "quizCell", for: indexPath) as! QuizTableViewCell
 
         // Configure the cell...
-        cell.quizTitle.text = quizTitles[indexPath.row]
-        cell.quizDescription.text = quizDescriptions[indexPath.row]
+        cell.quizTitle.text = self.quizTitles[indexPath.row]
+        cell.quizDescription.text = self.quizDescriptions[indexPath.row]
         
         return cell
     }
     
-    func requestData() {
+    func requestData() -> Bool {
+        var successful = false
         let urlPath = URL(string: dataURL)!
         let urlRequest = URLRequest(url: urlPath)
         let session = URLSession.shared
@@ -73,7 +100,7 @@ class QuizTableViewController: UITableViewController, NSURLConnectionDataDelegat
             let statusCode = httpResponse.statusCode
             
             if (statusCode == 200) {
-                print("Everyone is fine, file downloaded successfully.")
+                successful = true
                 do {
                     let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments) as! [[String:AnyObject]]
                     for quiz in json {
@@ -93,6 +120,15 @@ class QuizTableViewController: UITableViewController, NSURLConnectionDataDelegat
                             }
                         }
                     }
+//                    let saved = UserDefaults.standard
+//                    
+//                    saved.setValue(self.quizTitles, forKey: quizKeys.quizTitles)
+//                    saved.setValue(self.quizDescriptions, forKey: quizKeys.quizDescriptions)
+//                    saved.setValue(self.questions, forKeyPath: quizKeys.questions)
+//                    saved.setValue(self.quizAnswers, forKeyPath: quizKeys.quizAnswers)
+//                    saved.setValue(self.possibleAnswers, forKeyPath: quizKeys.possibleAnswers)
+//                    
+//                    saved.synchronize()
                 } catch {
                     print("error: \(error)")
                 }
@@ -101,6 +137,7 @@ class QuizTableViewController: UITableViewController, NSURLConnectionDataDelegat
         
         task.resume()
         
+        return successful
     }
     
     @IBAction func presentSettings(_ sender: AnyObject) {
